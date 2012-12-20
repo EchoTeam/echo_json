@@ -1,0 +1,11 @@
+{application, echo_json,
+ [
+  {description, "Echo Wrapper of rfc4627 erlang library"},
+  {vsn, "1.0.0"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {env, []}
+ ]}.
