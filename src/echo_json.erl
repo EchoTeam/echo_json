@@ -11,6 +11,7 @@
     digit_hex/1,
     encode/1,
     encode_noauto/1,
+    equiv/2,
     get_json_attr/2,
     get_json_attr/3,
     get_json_attr_list/2,
@@ -35,6 +36,8 @@ digit_hex(X) -> rfc4627:digit_hex(X).
 encode(X) -> rfc4627:encode(X).
 
 encode_noauto(X) -> rfc4627:encode_noauto(X).
+
+equiv(Obj1, Obj2) -> rfc4627:equiv(Obj1, Obj2).
 
 % Convert JSON blob into internal representation.
 unjson(JSONBlob) ->
