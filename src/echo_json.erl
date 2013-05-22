@@ -59,7 +59,7 @@ get_json_attr_str(Key, Obj) ->
     get_json_attr_str(Key, Obj, "").
 
 get_json_attr_str(Key, Obj, Default) ->
-    to_list(get_json_attr(Key, Obj, Default)).
+    type_utils:to_list(get_json_attr(Key, Obj, Default)).
 
 replace_json_attr({obj, PropList}, Attr, Value) ->
     {obj, lists:keystore(Attr, 1, PropList, {Attr, Value})}.
@@ -108,14 +108,7 @@ get_json_nested_attr_str(KeyList, Obj) ->
     get_json_nested_attr_str(KeyList, Obj, undefined).
 
 get_json_nested_attr_str(KeyList, Obj, Default) ->
-    to_list(get_json_nested_attr(KeyList, Obj, Default)).
-
-% copy of jsk_common:to_list()
-to_list(Arg) when is_list(Arg) -> Arg;
-to_list(Arg) when is_binary(Arg) -> binary_to_list(Arg);
-to_list(Arg) when is_atom(Arg) -> atom_to_list(Arg);
-to_list(Arg) when is_integer(Arg) -> integer_to_list(Arg);
-to_list(Arg) when is_reference(Arg) -> erlang:ref_to_list(Arg).
+    type_utils:to_list(get_json_nested_attr(KeyList, Obj, Default)).
 
 -ifdef(TEST).
 -include_lib("eunit/include/eunit.hrl").
