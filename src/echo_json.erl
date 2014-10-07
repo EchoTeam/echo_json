@@ -40,8 +40,8 @@ unjson(JSONBlob) ->
     try rfc4627:decode(JSONBlob) of
         {ok, Obj, _} -> Obj;
         _ -> {obj, []}
-    catch
-        _ -> {obj, []}
+    catch _C:_R ->
+        {obj, []}
     end.
 
 get_json_attr(Key, Obj) -> get_json_attr(Key, Obj, undefined).
@@ -119,5 +119,13 @@ echo_json_test() ->
     {obj, [{"k1", {obj, []}}]} = remove_json_nested_attr(["k1", "k11"], {obj, [{"k1", {obj, [{"k11", {obj, [{"k111", "v111"}]}}]}}]}),
     {obj, [{"k1", "v1"}]} = remove_json_nested_attr(["k2"], {obj, [{"k1", "v1"}]}),
     {obj, [{"k1", "v1"}]} = remove_json_nested_attr(["k2", "k22"], {obj, [{"k1", "v1"}]}).
+
+unjson_test() ->
+    % Normal JSON
+    {obj, [{"key", <<"value">>}]} = unjson(<<"{\"key\": \"value\"}">>),
+    % broken JSON object
+    {obj, []} = unjson(<<"{\"key\": ">>),
+    % broken UTF-8
+    {obj, []} = unjson(<<16#FF>>).
 
 -endif.
